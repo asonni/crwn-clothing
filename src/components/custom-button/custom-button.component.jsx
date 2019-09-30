@@ -1,10 +1,19 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import './custom-button.styles.scss';
 
-const CustomButton = ({ children, isGoogleSignIn, ...otherProps }) => (
+const CustomButton = ({
+  children,
+  isGoogleSignIn,
+  inverted,
+  ...otherProps
+}) => (
   <button
-    className={`${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`}
+    className={clsx('custom-button', {
+      inverted: inverted,
+      'google-sign-in': isGoogleSignIn
+    })}
     {...otherProps}
   >
     {children}

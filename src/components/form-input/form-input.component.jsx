@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import './form-input.styles.scss';
 
@@ -8,9 +9,9 @@ const FormInput = ({ handleChange, label, ...otherProps }) => {
       <input className="form-input" onChange={handleChange} {...otherProps} />
       {label ? (
         <label
-          className={`${
-            otherProps.value.length ? 'shrink' : ''
-          } form-input-label`}
+          className={clsx('form-input-label', {
+            shrink: otherProps.value.length
+          })}
         >
           {label}
         </label>
