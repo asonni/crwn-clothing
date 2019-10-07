@@ -17,7 +17,7 @@ import {
   OptionLink
 } from './header.styles';
 
-import './header.styles.scss';
+// import './header.styles.scss';
 
 const Header = ({ currentUser, hidden }) => {
   return (
@@ -29,7 +29,7 @@ const Header = ({ currentUser, hidden }) => {
         <OptionLink to="/shop">SHOP</OptionLink>
         <OptionLink to="/contact">CONTACT</OptionLink>
         {currentUser ? (
-          <OptionLink as="div" onClick={() => auth.signOut()}>
+          <OptionLink as="div" to="" onClick={() => auth.signOut()}>
             SIGN OUT
           </OptionLink>
         ) : (
