@@ -3,7 +3,7 @@ import { shopActionTypes } from './shop.types';
 const INITIAL_STATE = {
   collections: null,
   isFetching: false,
-  errorMessage: undefined
+  errorMessage: null
 };
 
 const shopReducer = (state, { type, payload }) => {
@@ -18,7 +18,8 @@ const shopReducer = (state, { type, payload }) => {
       return {
         ...state,
         isFetching: false,
-        collections: payload
+        collections: payload,
+        errorMessage: null
       };
     case shopActionTypes.FETCH_COLLECTIONS_FAILURE:
       return {
