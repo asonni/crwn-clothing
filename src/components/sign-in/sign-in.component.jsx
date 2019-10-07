@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -9,9 +10,19 @@ import {
   emailSignInStart
 } from '../../redux/user/user.actions';
 
+import {
+  selectIsSigningInWithEmail,
+  selectIsSigningInWithGoogle
+} from '../../redux/user/user.selectors';
+
 import './sign-in.styles.scss';
 
-const SignIn = ({ googleSignInStart, emailSignInStart }) => {
+const SignIn = ({
+  googleSignInStart,
+  emailSignInStart,
+  isSigningInWithEmail,
+  isSigningInWithGoogle
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -51,19 +62,30 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
           required
         />
         <div className="buttons">
-          <CustomButton type="submit">Sign in</CustomButton>
+          <CustomButton
+            type="submit"
+            disabled={isSigningInWithEmail || isSigningInWithGoogle}
+          >
+            {isSigningInWithEmail ? 'Signing In...' : 'Sign in'}
+          </CustomButton>
           <CustomButton
             type="button"
             onClick={googleSignInStart}
             isGoogleSignIn
+            disabled={isSigningInWithGoogle || isSigningInWithEmail}
           >
-            Sign in with Google
+            {isSigningInWithGoogle ? 'Signing In...' : 'Sign in with Google'}
           </CustomButton>
         </div>
       </form>
     </div>
   );
 };
+
+const mapStateToProps = createStructuredSelector({
+  isSigningInWithEmail: selectIsSigningInWithEmail,
+  isSigningInWithGoogle: selectIsSigningInWithGoogle
+});
 
 const mapDispatchToProps = dispatch => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
@@ -72,6 +94,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignIn);
