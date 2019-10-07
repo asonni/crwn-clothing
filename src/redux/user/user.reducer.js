@@ -3,6 +3,7 @@ import userActionTypes from './user.types';
 const INITIAL_STATE = {
   currentUser: null,
   errorMessage: null,
+  isSigningUp: false,
   isSigningInWithEmail: false,
   isSigningInWithGoogle: false
 };
@@ -10,6 +11,12 @@ const INITIAL_STATE = {
 const userReducer = (state, { type, payload }) => {
   if (typeof state === 'undefined') state = INITIAL_STATE;
   switch (type) {
+    case userActionTypes.SIGN_UP_START:
+      console.log(state);
+      return {
+        ...state,
+        isSigningUp: true
+      };
     case userActionTypes.EMAIL_SIGN_IN_START:
       return {
         ...state,
@@ -21,9 +28,11 @@ const userReducer = (state, { type, payload }) => {
         isSigningInWithGoogle: true
       };
     case userActionTypes.SIGN_IN_SUCCESS:
+    case userActionTypes.SIGN_UP_SUCCESS:
       return {
         ...state,
         currentUser: payload,
+        isSigningUp: false,
         isSigningInWithEmail: false,
         isSigningInWithGoogle: false,
         errorMessage: null
@@ -36,8 +45,10 @@ const userReducer = (state, { type, payload }) => {
       };
     case userActionTypes.SIGN_IN_FAILURE:
     case userActionTypes.SIGN_OUT_FAILURE:
+    case userActionTypes.SIGN_UP_FAILURE:
       return {
-        ...this.state,
+        ...state,
+        isSigningUp: false,
         isSigningInWithEmail: false,
         isSigningInWithGoogle: false,
         errorMessage: payload
