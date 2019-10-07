@@ -9,33 +9,29 @@ import { signUpStart } from '../../redux/user/user.actions';
 import './sign-up.styles.scss';
 
 const SignUp = ({ signUpStart }) => {
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userCredentials, setUserCredentials] = useState({
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
-  const handleChangeDisplayName = event => {
-    setDisplayName(event.target.value);
-  };
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
-
-  const handleChangePassword = event => {
-    setPassword(event.target.value);
-  };
-
-  const handleChangeConfirmPassword = event => {
-    setConfirmPassword(event.target.value);
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("password don't match");
-      setPassword('');
-      setConfirmPassword('');
+      setUserCredentials({
+        ...userCredentials,
+        password: '',
+        confirmPassword: ''
+      });
       return;
     }
     signUpStart({ email, password, displayName });
@@ -50,7 +46,7 @@ const SignUp = ({ signUpStart }) => {
           type="text"
           name="displayName"
           value={displayName}
-          handleChange={handleChangeDisplayName}
+          handleChange={handleChange}
           label="Display Name"
           required
         />
@@ -58,7 +54,7 @@ const SignUp = ({ signUpStart }) => {
           type="email"
           name="email"
           value={email}
-          handleChange={handleChangeEmail}
+          handleChange={handleChange}
           label="Email"
           required
         />
@@ -66,7 +62,7 @@ const SignUp = ({ signUpStart }) => {
           type="password"
           name="password"
           value={password}
-          handleChange={handleChangePassword}
+          handleChange={handleChange}
           label="Password"
           required
         />
@@ -74,7 +70,7 @@ const SignUp = ({ signUpStart }) => {
           type="password"
           name="confirmPassword"
           value={confirmPassword}
-          handleChange={handleChangeConfirmPassword}
+          handleChange={handleChange}
           label="Confirm Password"
           required
         />

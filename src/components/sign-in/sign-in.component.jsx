@@ -18,25 +18,26 @@ import {
 import './sign-in.styles.scss';
 
 const SignIn = ({
-  googleSignInStart,
   emailSignInStart,
+  googleSignInStart,
   isSigningInWithEmail,
   isSigningInWithGoogle
 }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userCredentials, setUserCredentials] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = userCredentials;
 
   const handleSubmit = async event => {
     event.preventDefault();
     emailSignInStart(email, password);
   };
 
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
-
-  const handleChangePassword = event => {
-    setPassword(event.target.value);
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
@@ -49,7 +50,7 @@ const SignIn = ({
           name="email"
           type="email"
           value={email}
-          handleChange={handleChangeEmail}
+          handleChange={handleChange}
           label="Email"
           required
         />
@@ -57,7 +58,7 @@ const SignIn = ({
           name="password"
           type="password"
           value={password}
-          handleChange={handleChangePassword}
+          handleChange={handleChange}
           label="Password"
           required
         />
