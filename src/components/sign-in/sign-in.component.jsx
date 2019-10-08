@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -11,19 +10,13 @@ import {
 } from '../../redux/user/user.actions';
 
 import {
-  selectIsSigningInWithEmail,
-  selectIsSigningInWithGoogle
-} from '../../redux/user/user.selectors';
+  SignInContainer,
+  SignInTitle,
+  ButtonsBarContainer
+} from './sign-in.styles';
 
-import './sign-in.styles.scss';
-
-const SignIn = ({
-  emailSignInStart,
-  googleSignInStart,
-  isSigningInWithEmail,
-  isSigningInWithGoogle
-}) => {
-  const [userCredentials, setUserCredentials] = useState({
+const SignIn = ({ emailSignInStart, googleSignInStart }) => {
+  const [userCredentials, setCredentials] = useState({
     email: '',
     password: ''
   });
@@ -32,26 +25,28 @@ const SignIn = ({
 
   const handleSubmit = async event => {
     event.preventDefault();
+
     emailSignInStart(email, password);
   };
 
   const handleChange = event => {
-    const { name, value } = event.target;
-    setUserCredentials({ ...userCredentials, [name]: value });
+    const { value, name } = event.target;
+
+    setCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
-    <div className="sign-in">
-      <h2>I already have an account</h2>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
       <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
         <FormInput
           name="email"
           type="email"
-          value={email}
           handleChange={handleChange}
-          label="Email"
+          value={email}
+          label="email"
           required
         />
         <FormInput
@@ -59,34 +54,23 @@ const SignIn = ({
           type="password"
           value={password}
           handleChange={handleChange}
-          label="Password"
+          label="password"
           required
         />
-        <div className="buttons">
-          <CustomButton
-            type="submit"
-            disabled={isSigningInWithEmail || isSigningInWithGoogle}
-          >
-            {isSigningInWithEmail ? 'Signing In...' : 'Sign in'}
-          </CustomButton>
+        <ButtonsBarContainer>
+          <CustomButton type="submit"> Sign in </CustomButton>
           <CustomButton
             type="button"
             onClick={googleSignInStart}
             isGoogleSignIn
-            disabled={isSigningInWithGoogle || isSigningInWithEmail}
           >
-            {isSigningInWithGoogle ? 'Signing In...' : 'Sign in with Google'}
+            Sign in with Google
           </CustomButton>
-        </div>
+        </ButtonsBarContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
-
-const mapStateToProps = createStructuredSelector({
-  isSigningInWithEmail: selectIsSigningInWithEmail,
-  isSigningInWithGoogle: selectIsSigningInWithGoogle
-});
 
 const mapDispatchToProps = dispatch => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
@@ -95,6 +79,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SignIn);
