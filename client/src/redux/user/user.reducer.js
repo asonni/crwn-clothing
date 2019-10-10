@@ -12,7 +12,6 @@ const userReducer = (state, { type, payload }) => {
   if (typeof state === 'undefined') state = INITIAL_STATE;
   switch (type) {
     case userActionTypes.SIGN_UP_START:
-      console.log(state);
       return {
         ...state,
         isSigningUp: true

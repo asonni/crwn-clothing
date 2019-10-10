@@ -35,12 +35,9 @@ export const INITIAL_STATE = {
   ]
 };
 
-const directoryReducer = (state, { type, payload }) => {
+const directoryReducer = state => {
   if (typeof state === 'undefined') state = INITIAL_STATE;
-  switch (type) {
-    default:
-      return state;
-  }
+  return state;
 };
 
 export default directoryReducer;
