@@ -33,31 +33,31 @@ describe('userReducer', () => {
     ).toBe(null);
   });
 
-  // it('should set errorMessage to payload on signInFailure, signUpFailure, signOutFailure action', () => {
-  //   const mockError = {
-  //     message: 'errored',
-  //     code: 404
-  //   };
+  it('should set errorMessage to payload on signInFailure, signUpFailure, signOutFailure action', () => {
+    const mockError = {
+      message: 'errored',
+      code: 404
+    };
 
-  //   expect(
-  //     userReducer(initialState, {
-  //       type: userActionTypes.SIGN_IN_FAILURE,
-  //       payload: mockError
-  //     }).error
-  //   ).toBe(mockError);
+    expect(
+      userReducer(initialState, {
+        type: userActionTypes.SIGN_IN_FAILURE,
+        payload: mockError
+      }).errorMessage
+    ).toBe(mockError);
 
-  //   expect(
-  //     userReducer(initialState, {
-  //       type: userActionTypes.SIGN_UP_FAILURE,
-  //       payload: mockError
-  //     }).error
-  //   ).toBe(mockError);
+    expect(
+      userReducer(initialState, {
+        type: userActionTypes.SIGN_UP_FAILURE,
+        payload: mockError
+      }).errorMessage
+    ).toBe(mockError);
 
-  //   expect(
-  //     userReducer(initialState, {
-  //       type: userActionTypes.SIGN_OUT_FAILURE,
-  //       payload: mockError
-  //     }).error
-  //   ).toBe(mockError);
-  // });
+    expect(
+      userReducer(initialState, {
+        type: userActionTypes.SIGN_OUT_FAILURE,
+        payload: mockError
+      }).errorMessage
+    ).toBe(mockError);
+  });
 });
