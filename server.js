@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const compression = require('compression');
 const enforce = require('express-sslify');
+const dotenv = require('dotenv');
 
 // eslint-disable-next-line no-undef
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 // eslint-disable-next-line no-undef
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
